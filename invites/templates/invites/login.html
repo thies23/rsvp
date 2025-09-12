@@ -1,0 +1,16 @@
+
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Hochzeit - Code Login</title>
+</head>
+<body>
+  <h1>Gib deinen 5-stelligen Code ein</h1>
+  {% if msg %}<p style="color:red">{{ msg }}</p>{% endif %}
+  <form method="post">{% csrf_token %}
+    {{ form.code.label_tag }} {{ form.code }}
+    <button type="submit">Einloggen</button>
+  </form>
+</body>
+</html>

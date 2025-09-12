@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>RSVP für {{ invite.name }}</title>
+  <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
+</head>
+<body>
+{# ganz oben in deinem Template (innerhalb body) #}
+{{ persons|default:"[]"|json_script:"existingPersons-data" }}
+{{ rsvp.guests_count|default:0|json_script:"initialGuests-data" }}
+{{ rsvp.attending|default:None|json_script:"initialAttending-data" }}
+
+
+  <h1>RSVP — {{ invite.name }} (Code: {{ invite.code }})</h1>
+  <form method="post" id="rsvp-form">{% csrf_token %}
+    <div>
+        <div class="form-check">
+  <input class="form-check-input" type="radio" name="attending" id="attending_true" value="True" {% if rsvp.attending %}checked{% endif %}>
+  <label class="form-check-label" for="attending_true">
+    Ja
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="attending" id="attending_false" value="False" {% if rsvp.attending is not None and not rsvp.attending %}checked{% endif %}>
+  <label class="form-check-label" for="attending_false">
+    Nein
+  </label>
+</div>
+
+      <label>Wie viele Personen kommen? <span id="guest-count-display">0</span> / {{ max_guests }}</label>
+      <input type="range" id="guest-count" name="guests_count" min="0" max="{{ max_guests }}" value="{{ rsvp.guests_count|default:1 }}">
+<div id="persons-container"></div>
+
+<script type="application/json" id="existingPersons-data">
+  {{ persons|default:"[]"|safe }}
+</script>
+<script type="application/json" id="initialGuests-data">
+  {{ rsvp.guests_count|default:0 }}
+</script>
+<script type="application/json" id="initialAttending-data">
+  {{ rsvp.attending|yesno:"true,false,null" }}
+</script>
+
+    </div>
+
+    <button class="btn btn-primary" type="submit">Absenden</button>
+  </form>
+
+  <script>
+    // initial data passed from the server
+    const maxGuests = {{ max_guests|default:1 }};
+    const existingPersons = {{ persons|safe|default:'[]' }};
+    const existingGuestsCount = {{ rsvp.guests_count|default:0 }};
+    const editable = true;
+  </script>
+  <script src="/static/invites/js/rsvp.js"></script>
+  <script src="/static/invites/js/bootstrap.js"></script>
+</body>
+</html>
