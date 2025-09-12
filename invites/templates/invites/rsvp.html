@@ -50,20 +50,18 @@
   </div>
 <!-- Details: werden bei Nein ausgeblendet -->
 <div id="attend-details">
-  {% if max_guests > 1 %}
+
   <div class="mb-3">
+      
     <label for="guest-count" class="form-label">
-      {% if invite.typ == "Familie" %}Mit wie vielen Personen kommt ihr?{% else %}Mit wie vielen Personen kommst du?{% endif %}
+      {% if invite.type == "family" %}Mit wie vielen Personen kommt ihr?{% else %}Mit wie vielen Personen kommst du?{% endif %}
       <span id="guest-count-display">0</span> / {{ max_guests }}
     </label>
     <input type="range" class="form-range" id="guest-count" name="guests_count"
            min="1" max="{{ max_guests }}"
-           value="{% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% elif invite.typ == 'Familie' %}2{% else %}1{% endif %}">
+           value="{% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% elif invite.type == 'family' %}2{% else %}1{% endif %}">
+
   </div>
-  {% else %}
-  <input type="hidden" id="guest-count" name="guests_count"
-         value="{% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% else %}1{% endif %}">
-  {% endif %}
   <div id="persons-container"></div>
 </div>
 
