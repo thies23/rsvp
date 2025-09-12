@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>Danke für deine Antwort!</h1>
-  <p>Du kannst deine Antworten noch bis zum 01.01.1970 ändern. Benutze dafür einfach beim Login erneut deinen Code ( {{ invite.code }} ) oder Scanne den QR-Code erneut.</p>
+  <p>Du kannst deine Antworten noch bis zum {{ siteconfig.rsvp_deadline }} ändern. Benutze dafür einfach beim Login erneut deinen Code ( {{ invite.code }} ) oder Scanne den QR-Code erneut.</p>
   <p>{% if rsvp.attending %}Du kommst mit {{ rsvp.guests_count }} Gästen.{% else %}Du hast abgelehnt.{% endif %}</p>
 </body>
 </html>

@@ -13,9 +13,9 @@
 <h1>Hallo {{ invite.name }}</h1>
 <h3>
 {% if invite.type == "family" %}
-  Wir würden euch gerne zu unserer Hochzeit einladen.
+Wir würden euch gerne zu unserer Hochzeit am {{ siteconfig.event_date }} in {{ siteconfig.event_location }} einladen.
 {% else %}
-  Wir würden dich gerne zu unserer Hochzeit einladen.
+  Wir würden dich gerne zu unserer Hochzeit am {{ siteconfig.event_date }} in {{ siteconfig.event_location }} einladen.
 {% endif %}
 </h3>
 <h5>
