@@ -41,7 +41,7 @@
     nameGroup.className = 'mb-3';
     const nameLabel = document.createElement('label');
     nameLabel.className = 'form-label';
-    nameLabel.textContent = 'Name';
+    nameLabel.textContent = 'Dein Name';
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.name = 'person_name[]';
@@ -57,7 +57,7 @@
     dietGroup.className = 'mb-3';
     const dietLabel = document.createElement('label');
     dietLabel.className = 'form-label';
-    dietLabel.textContent = 'Essgewohnheit';
+    dietLabel.textContent = 'Wie ernährst du dich?';
     const dietSelect = document.createElement('select');
     dietSelect.name = 'person_diet[]';
     dietSelect.className = 'form-select';
@@ -77,7 +77,7 @@
     allergyGroup.className = 'mb-3';
     const allergyLabel = document.createElement('label');
     allergyLabel.className = 'form-label d-block';
-    allergyLabel.textContent = 'Allergien';
+    allergyLabel.textContent = 'Hast du irgendwelche Allergien?';
     allergyGroup.appendChild(allergyLabel);
 
     const radioWrapper = document.createElement('div');
