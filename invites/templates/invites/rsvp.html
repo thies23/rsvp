@@ -13,7 +13,13 @@
 {{ rsvp.attending|default:None|json_script:"initialAttending-data" }}
 
 
-  <h1>RSVP — {{ invite.name }} (Code: {{ invite.code }})</h1>
+  <h1>Hallo {{ invite.name }}</h1>
+  <h3>Wir würden euch gerne zu unserer Hochzeit einladen.</h3>
+<h5>Damit wir besser planen können bitten wir dich dieses Formular auszufüllen.</h5>
+<br /><br />
+<hr />
+<br /><br />
+<h4>Nimmst du an unserer Hochzeitsfeier teil?</h4>
   <form method="post" id="rsvp-form">{% csrf_token %}
     <div>
         <div class="form-check">
@@ -28,7 +34,7 @@
     Nein
   </label>
 </div>
-
+<div class="form-check"></div>
       <label>Wie viele Personen kommen? <span id="guest-count-display">0</span> / {{ max_guests }}</label>
       <input type="range" id="guest-count" name="guests_count" min="0" max="{{ max_guests }}" value="{{ rsvp.guests_count|default:1 }}">
 <div id="persons-container"></div>
