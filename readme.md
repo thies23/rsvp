@@ -26,7 +26,4 @@ We needed a simple RSVP system for our wedding that is a little bit more than a 
 
 ## To Do:
 
-- Auto invite guests
-- Auto reminder emails
-- Print invites
-- Export CSV for allergies, guests, etc.
+Check [To-Do Issues](https://github.com/td00/rsvp/issues?q=is%3Aissue%20state%3Aopen%20label%3Atodo)
