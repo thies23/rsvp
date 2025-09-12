@@ -6,8 +6,32 @@
   <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
 </head>
 <body>
-  <h1>Danke für deine Antwort!</h1>
+
+{% if invite.type == "family" %}
+    <h1>Danke für eure Antwort!</h1>
+    <p>Ihr könnt eure Antworten noch bis zum {{ siteconfig.rsvp_deadline }} ändern. Benutzt dafür einfach beim Login erneut euren Code ( {{ invite.code }} ) oder Scannt den QR-Code erneut.</p>
+    {% if rsvp.guests_count > 1 %}
+        <p>
+        {% if rsvp.attending %}
+            Ihr kommt zu {{ rsvp.guests_count }}. .
+        {% else %}
+            Ihr habt abgelehnt.
+        {% endif %}
+        </p>
+    {% else %}
+  <p>
+    {% if rsvp.attending %}
+        Einer von euch kommt.
+    {% else %}
+        Ihr habt abgelehnt.
+    {% endif %}
+  </p>
+{% endif %}
+{% else %}
+    <h1>Danke für deine Antwort!</h1>
+
   <p>Du kannst deine Antworten noch bis zum {{ siteconfig.rsvp_deadline }} ändern. Benutze dafür einfach beim Login erneut deinen Code ( {{ invite.code }} ) oder Scanne den QR-Code erneut.</p>
-  <p>{% if rsvp.attending %}Du kommst mit {{ rsvp.guests_count }} Gästen.{% else %}Du hast abgelehnt.{% endif %}</p>
+  <p>{% if rsvp.attending %}Du kommst {% if rsvp.guests_count > 2 %}mit {{ rsvp.guests_count }} Gästen.{% elif rsvp.guests_count > 1 %}mit einem Gast.{% else %}alleine.{% endif %}{% else %}Du hast abgelehnt.{% endif %}</p>
+{% endif %}
 </body>
 </html>
