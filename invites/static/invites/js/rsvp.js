@@ -13,13 +13,13 @@
   }
 
   const existingPersons = safeParseJSON('existingPersons-data', []);
-  const initialGuests = window.defaultGuests ?? safeParseJSON('initialGuests-data', 0);
+  const initialGuests = window.defaultGuests ?? safeParseJSON('initialGuests-data', 1);
   const attendingState = safeParseJSON('initialAttending-data', null);
 
   const attendYes = document.querySelector('input[name="attending"][value="True"]');
   const attendNo = document.querySelector('input[name="attending"][value="False"]');
   const details = el('attend-details');
-  const guestRange = el('guest-count');
+  const guestRange = el('guest-count'); // Range oder Hidden
   const guestDisplay = el('guest-count-display');
   const personsContainer = el('persons-container');
 
@@ -36,7 +36,6 @@
     header.textContent = `Person ${index + 1}`;
     wrapper.appendChild(header);
 
-    // Name Input
     const nameGroup = document.createElement('div');
     nameGroup.className = 'mb-3';
     nameGroup.innerHTML = `
@@ -45,7 +44,6 @@
     `;
     wrapper.appendChild(nameGroup);
 
-    // Essgewohnheiten
     const dietGroup = document.createElement('div');
     dietGroup.className = 'mb-3';
     const dietSelect = document.createElement('select');
@@ -62,7 +60,6 @@
     dietGroup.appendChild(dietSelect);
     wrapper.appendChild(dietGroup);
 
-    // Allergien
     const allergyGroup = document.createElement('div');
     allergyGroup.className = 'mb-3';
     allergyGroup.innerHTML = `<label class="form-label d-block">Allergien</label>`;
@@ -111,7 +108,6 @@
     allergyGroup.appendChild(labelNo);
     allergyGroup.appendChild(labelYes);
     allergyGroup.appendChild(allergyText);
-
     wrapper.appendChild(allergyGroup);
     return wrapper;
   }
@@ -125,34 +121,34 @@
   }
 
   function updateGuestCount() {
-    const count = parseInt(guestRange.value, 10) || 0;
-    guestDisplay.textContent = count;
+    const count = parseInt(guestRange.value, 10) || 1;
+    if (guestDisplay) guestDisplay.textContent = count;
     renderPersons(count);
   }
-
 
   document.addEventListener('DOMContentLoaded', () => {
-  if (attendingState === true && attendYes) attendYes.checked = true;
-  if (attendingState === false && attendNo) attendNo.checked = true;
+    if (attendingState === true && attendYes) attendYes.checked = true;
+    if (attendingState === false && attendNo) attendNo.checked = true;
 
-  showHideDetails();
+    showHideDetails();
 
-  if (attendYes) attendYes.addEventListener('change', showHideDetails);
-  if (attendNo) attendNo.addEventListener('change', showHideDetails);
+    if (attendYes) attendYes.addEventListener('change', showHideDetails);
+    if (attendNo) attendNo.addEventListener('change', showHideDetails);
 
-  if (guestRange) {
-    // Setze Wert
-    guestRange.value = initialGuests;
+    if (guestRange) {
+      guestRange.value = initialGuests;
 
-    // Immer Personen rendern
-    const count = parseInt(guestRange.value, 10) || 1;
-    renderPersons(count);
+      // Personen immer rendern
+      const count = parseInt(guestRange.value, 10) || 1;
+      renderPersons(count);
 
-    // Nur EventListener, wenn es ein Range-Input ist
-    if (guestRange.type === 'range') {
-      guestRange.addEventListener('input', updateGuestCount);
-      updateGuestCount(); // Update Slider-Anzeige
+      // Slider-Anzeige updaten, falls Range
+      if (guestRange.type === 'range') {
+        updateGuestCount();
+        guestRange.addEventListener('input', updateGuestCount);
+      } else if (guestDisplay) {
+        guestDisplay.textContent = count; // Hidden Input -> Anzeige trotzdem korrekt
+      }
     }
-  }
-});
+  });
 })();
