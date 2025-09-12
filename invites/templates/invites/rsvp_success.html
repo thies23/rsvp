@@ -1,10 +1,13 @@
 
 <!doctype html>
 <html lang="de">
-<head><meta charset="utf-8"><title>Danke</title></head>
+<head><meta charset="utf-8"><title>Danke</title>
+
+  <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
+</head>
 <body>
   <h1>Danke für deine Antwort!</h1>
-  <p>Dein Code: {{ invite.code }}</p>
+  <p>Du kannst deine Antworten noch bis zum 01.01.1970 ändern. Benutze dafür einfach beim Login erneut deinen Code ( {{ invite.code }} ) oder Scanne den QR-Code erneut.</p>
   <p>{% if rsvp.attending %}Du kommst mit {{ rsvp.guests_count }} Gästen.{% else %}Du hast abgelehnt.{% endif %}</p>
 </body>
 </html>

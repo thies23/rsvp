@@ -4,13 +4,20 @@
 <head>
   <meta charset="utf-8">
   <title>Hochzeit - Code Login</title>
+
+  <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
+
 </head>
 <body>
   <h1>Gib deinen 5-stelligen Code ein</h1>
   {% if msg %}<p style="color:red">{{ msg }}</p>{% endif %}
   <form method="post">{% csrf_token %}
-    {{ form.code.label_tag }} {{ form.code }}
-    <button type="submit">Einloggen</button>
+    <div class="mb-3">
+        <label for="id_code" class="form-label">Gib hier den Code auf der Einladung ein, oder scanne den QR Code um direkt angemeldet zu werden.</label>
+        <br />
+         {{ form.code }}
+    <button class="btn btn-success" type="submit">Einloggen</button>
+    </div>
   </form>
 </body>
 </html>
