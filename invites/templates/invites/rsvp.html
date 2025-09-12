@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="de">
 <head>
@@ -7,61 +6,76 @@
   <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
 </head>
 <body>
-{# ganz oben in deinem Template (innerhalb body) #}
 {{ persons|default:"[]"|json_script:"existingPersons-data" }}
 {{ rsvp.guests_count|default:0|json_script:"initialGuests-data" }}
 {{ rsvp.attending|default:None|json_script:"initialAttending-data" }}
 
+<h1>Hallo {{ invite.name }}</h1>
+<h3>
+{% if invite.type == "family" %}
+  Wir würden euch gerne zu unserer Hochzeit einladen.
+{% else %}
+  Wir würden dich gerne zu unserer Hochzeit einladen.
+{% endif %}
+</h3>
+<h5>
+{% if invite.type == "family" %}
+  Damit wir besser planen können, bitten wir euch dieses Formular auszufüllen.
+{% else %}
+  Damit wir besser planen können, bitten wir dich dieses Formular auszufüllen.
+{% endif %}
+</h5>
 
-  <h1>Hallo {{ invite.name }}</h1>
-  <h3>Wir würden euch gerne zu unserer Hochzeit einladen.</h3>
-<h5>Damit wir besser planen können bitten wir dich dieses Formular auszufüllen.</h5>
-<br /><br />
-<hr />
-<br /><br />
+<hr class="my-4">
+
+
+{% if invite.type == "family" %}
+<h4>Nehmt ihr an unserer Hochzeitsfeier teil?</h4>
+{% else %}
 <h4>Nimmst du an unserer Hochzeitsfeier teil?</h4>
-  <form method="post" id="rsvp-form">{% csrf_token %}
-    <div>
-        <div class="form-check">
-  <input class="form-check-input" type="radio" name="attending" id="attending_true" value="True" {% if rsvp.attending %}checked{% endif %}>
-  <label class="form-check-label" for="attending_true">
-    Ja
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="attending" id="attending_false" value="False" {% if rsvp.attending is not None and not rsvp.attending %}checked{% endif %}>
-  <label class="form-check-label" for="attending_false">
-    Nein
-  </label>
-</div>
-<div class="form-check"></div>
-      <label>Wie viele Personen kommen? <span id="guest-count-display">0</span> / {{ max_guests }}</label>
-      <input type="range" id="guest-count" name="guests_count" min="0" max="{{ max_guests }}" value="{{ rsvp.guests_count|default:1 }}">
-<div id="persons-container"></div>
+{% endif %}
+<form method="post" id="rsvp-form">
+  {% csrf_token %}
 
-<script type="application/json" id="existingPersons-data">
-  {{ persons|default:"[]"|safe }}
-</script>
-<script type="application/json" id="initialGuests-data">
-  {{ rsvp.guests_count|default:0 }}
-</script>
-<script type="application/json" id="initialAttending-data">
-  {{ rsvp.attending|yesno:"true,false,null" }}
-</script>
-
+  <!-- Teilnahme Ja/Nein -->
+  <div class="mb-3">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="attending" id="attending_true" value="True" {% if rsvp.attending %}checked{% endif %}>
+      <label class="form-check-label" for="attending_true">Ja</label>
     </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="attending" id="attending_false" value="False" {% if rsvp.attending is not None and not rsvp.attending %}checked{% endif %}>
+      <label class="form-check-label" for="attending_false">Nein</label>
+    </div>
+  </div>
+<!-- Details: werden bei Nein ausgeblendet -->
+<div id="attend-details">
+  {% if max_guests > 1 %}
+  <div class="mb-3">
+    <label for="guest-count" class="form-label">
+      {% if invite.typ == "Familie" %}Mit wie vielen Personen kommt ihr?{% else %}Mit wie vielen Personen kommst du?{% endif %}
+      <span id="guest-count-display">0</span> / {{ max_guests }}
+    </label>
+    <input type="range" class="form-range" id="guest-count" name="guests_count"
+           min="1" max="{{ max_guests }}"
+           value="{% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% elif invite.typ == 'Familie' %}2{% else %}1{% endif %}">
+  </div>
+  {% else %}
+  <input type="hidden" id="guest-count" name="guests_count"
+         value="{% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% else %}1{% endif %}">
+  {% endif %}
+  <div id="persons-container"></div>
+</div>
 
-    <button class="btn btn-primary" type="submit">Absenden</button>
-  </form>
 
-  <script>
-    // initial data passed from the server
-    const maxGuests = {{ max_guests|default:1 }};
-    const existingPersons = {{ persons|safe|default:'[]' }};
-    const existingGuestsCount = {{ rsvp.guests_count|default:0 }};
-    const editable = true;
-  </script>
-  <script src="/static/invites/js/rsvp.js"></script>
-  <script src="/static/invites/js/bootstrap.js"></script>
+  <button class="btn btn-primary" type="submit">Absenden</button>
+</form>
+
+<script>
+  const maxGuests = {{ max_guests|default:1 }};
+  const defaultGuests = {% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% elif invite.typ == "family" %}2{% else %}1{% endif %};
+</script>
+<script src="/static/invites/js/rsvp.js"></script>
+<script src="/static/invites/js/bootstrap.js"></script>
 </body>
 </html>
