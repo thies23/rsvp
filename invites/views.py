@@ -32,7 +32,7 @@ def rsvp_with_code(request, code):
     # check deadline
     config = SiteConfig.objects.first()
     if config and config.rsvp_deadline and timezone.now() > config.rsvp_deadline:
-        return render(request, 'invites/rsvp_closed.html', {'invite': invite})
+        return render(request, 'invites/rsvp_closed.html', {'invite': invite, 'siteconfig': siteconfig})
 
     rsvp, created = RSVP.objects.get_or_create(invite=invite)
 
@@ -52,7 +52,7 @@ def rsvp_with_code(request, code):
             rsvp.guests_count = 0
             rsvp.save()
             rsvp.persons.all().delete()
-            return render(request, 'invites/rsvp_success.html', {'invite': invite, 'rsvp': rsvp})
+            return render(request, 'invites/rsvp_success.html', {'invite': invite, 'siteconfig': config, 'rsvp': rsvp})
 
         # attending = True
         try:
@@ -79,7 +79,7 @@ def rsvp_with_code(request, code):
             allergy = allergies[i] if i < len(allergies) else ''
             RSVPPerson.objects.create(rsvp=rsvp, name=name, diet=diet, allergies=allergy)
 
-        return render(request, 'invites/rsvp_success.html', {'invite': invite, 'rsvp': rsvp})
+        return render(request, 'invites/rsvp_success.html', {'invite': invite, 'siteconfig': config, 'rsvp': rsvp})
 
     # GET: prepare data for template
     persons = rsvp.persons.all()
@@ -87,6 +87,7 @@ def rsvp_with_code(request, code):
     return render(request, 'invites/rsvp.html', {
         'invite': invite,
         'rsvp': rsvp,
+        'siteconfig': config,
         'persons': persons_data,
         'max_guests': invite.max_guests,
         'rsvp_deadline': config.rsvp_deadline if config else None,

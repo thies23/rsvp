@@ -20,6 +20,9 @@ def generate_unique_code():
 class SiteConfig(models.Model):
     """Singleton-like model to keep config such as RSVP deadline."""
     rsvp_deadline = models.DateTimeField(null=True, blank=True, help_text='Datum bis zu dem Antworten editierbar sind (UTC)')
+    rsvp_url = models.URLField(blank=True, help_text='Basis-URL für RSVP Links, z.B. https://meinehochzeit.de')
+    event_date = models.DateField(null=True, blank=True, help_text='Datum der Veranstaltung (für E-Mails o.ä.)')
+    event_location = models.CharField(max_length=255, blank=True, help_text='Ort der Veranstaltung (für E-Mails o.ä.)')
 
     def __str__(self):
         return 'Site Config'
@@ -35,10 +38,10 @@ class Invite(models.Model):
         ('individual', 'Einzelperson'),
     )
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
-    name = models.CharField(max_length=255)
-    email = models.EmailField()
+    name = models.CharField(max_length=255, verbose_name="Name(n)")
+    email = models.EmailField(verbose_name="E-Mail")
     address = models.TextField(blank=True)
-    max_guests = models.PositiveIntegerField(default=1)
+    max_guests = models.PositiveIntegerField(default=1, verbose_name="Maximal Gäste")
     diet = models.CharField(max_length=255, blank=True)
     allergies = models.CharField(max_length=255, blank=True)
     phone = models.CharField(max_length=50, blank=True)
@@ -50,10 +53,12 @@ class Invite(models.Model):
             self.code = generate_unique_code()
         super().save(*args, **kwargs)
 
-    def get_rsvp_url(self, request=None):
-        if not self.code:
-            return None  # oder gib '' zurück
-        return reverse('invites:rsvp_with_code', args=[self.code])
+    def get_rsvp_url(self):
+        config = SiteConfig.objects.first()
+        if config and config.rsvp_url:
+            return f"{config.rsvp_url.rstrip('/')}/rsvp/{self.code}"
+        # fallback
+        return f"/rsvp/{self.code}"
 
     def __str__(self):
         return f"{self.name} ({self.code})"
@@ -61,9 +66,9 @@ class Invite(models.Model):
 
 class RSVP(models.Model):
     invite = models.OneToOneField(Invite, on_delete=models.CASCADE, related_name='rsvp')
-    attending = models.BooleanField(null=True)
-    guests_count = models.PositiveIntegerField(default=0)
-    submitted_at = models.DateTimeField(auto_now=True)
+    attending = models.BooleanField(null=True, verbose_name="Nimmt teil?")
+    guests_count = models.PositiveIntegerField(default=0, verbose_name="Anzahl der Gäste")
+    submitted_at = models.DateTimeField(auto_now=True, verbose_name="Zuletzt aktualisiert")
 
     def editable(self):
         try:
