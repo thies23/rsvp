@@ -46,6 +46,11 @@
 
     const dietGroup = document.createElement('div');
     dietGroup.className = 'mb-3';
+    const dietLabel = document.createElement('label');
+    dietLabel.className = 'form-label';
+    dietLabel.textContent = 'Essgewohnheit';
+    dietGroup.appendChild(dietLabel);
+
     const dietSelect = document.createElement('select');
     dietSelect.name = 'person_diet[]';
     dietSelect.className = 'form-select';
@@ -56,10 +61,31 @@
       if (person.diet === option) opt.selected = true;
       dietSelect.appendChild(opt);
     });
-    dietGroup.innerHTML = `<label class="form-label">Essgewohnheit</label>`;
     dietGroup.appendChild(dietSelect);
+
+    // Popover für Omnivor
+    const popoverBtn = document.createElement('a');
+    popoverBtn.setAttribute('tabindex', '0');
+    popoverBtn.className = 'btn btn-sm btn-danger ms-2';
+    popoverBtn.setAttribute('role', 'button');
+    popoverBtn.setAttribute('data-bs-toggle', 'popover');
+    popoverBtn.setAttribute('data-bs-trigger', 'focus');
+    popoverBtn.setAttribute('data-bs-title', 'Hinweis');
+    popoverBtn.setAttribute('data-bs-content', 'Auf unserer Hochzeit wird nur vegetarisches & veganes Essen geben. Wir bedanken uns für dein/euer Verständnis.');
+    popoverBtn.textContent = 'Info';
+    popoverBtn.style.display = dietSelect.value === 'Omnivor' ? 'inline-block' : 'none';
+    dietGroup.appendChild(popoverBtn);
+
+    // Popover initialisieren
+    new bootstrap.Popover(popoverBtn);
+
+    dietSelect.addEventListener('change', () => {
+      popoverBtn.style.display = dietSelect.value === 'Omnivor' ? 'inline-block' : 'none';
+    });
+
     wrapper.appendChild(dietGroup);
 
+    // Allergien
     const allergyGroup = document.createElement('div');
     allergyGroup.className = 'mb-3';
     allergyGroup.innerHTML = `<label class="form-label d-block">Allergien</label>`;
@@ -131,7 +157,6 @@
     if (attendingState === false && attendNo) attendNo.checked = true;
 
     showHideDetails();
-
     if (attendYes) attendYes.addEventListener('change', showHideDetails);
     if (attendNo) attendNo.addEventListener('change', showHideDetails);
 
