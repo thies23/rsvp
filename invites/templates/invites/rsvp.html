@@ -74,6 +74,7 @@
   const defaultGuests = {% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% elif invite.typ == "family" %}2{% else %}1{% endif %};
 </script>
 <script src="/static/invites/js/rsvp.js"></script>
+<script src="/static/invites/js/popper.min.js"></script>
 <script src="/static/invites/js/bootstrap.js"></script>
 </body>
 </html>
