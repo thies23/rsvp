@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <title>RSVP für {{ invite.name }}</title>
   <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/invites/css/rsvp.css">
 </head>
 <body>
 {{ persons|default:"[]"|json_script:"existingPersons-data" }}
 {{ rsvp.guests_count|default:0|json_script:"initialGuests-data" }}
 {{ rsvp.attending|default:None|json_script:"initialAttending-data" }}
 
-<h1>Hallo {{ invite.name }}</h1>
+<h1 class="title">Hallo {{ invite.name }}</h1>
 <h3>
 {% if invite.type == "family" %}
 Wir würden euch gerne zu unserer Hochzeit am {{ siteconfig.event_date }} in {{ siteconfig.event_location }} einladen.
