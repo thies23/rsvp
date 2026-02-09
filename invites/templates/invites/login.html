@@ -6,18 +6,47 @@
   <title>Hochzeit - Code Login</title>
 
   <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/invites/css/rsvp.css">
+  <link rel="stylesheet" href="/static/invites/css/login.css">
 
 </head>
 <body>
-  <h1>Gib deinen 5-stelligen Code ein</h1>
-  {% if msg %}<p style="color:red">{{ msg }}</p>{% endif %}
-  <form method="post">{% csrf_token %}
-    <div class="mb-3">
-        <label for="id_code" class="form-label">Gib hier den Code auf der Einladung ein, oder scanne den QR Code um direkt angemeldet zu werden.</label>
-        <br />
-         {{ form.code }}
-    <button class="btn btn-success" type="submit">Einloggen</button>
+
+ <div class="container-fluid">
+  <div class="row min-vh-100">
+
+    <!-- Linke 2/3 -->
+    <div class="col-md-8"></div>
+
+    <!-- Rechtes 1/3 mit Blur -->
+    <div class="col-md-4 blurred-right">
+
+      <!-- Textbox -->
+      <div class="box box-top tinted">
+        <h1 class="title-white">Thies & Frej Heiraten</h1>
+        <h3>Und wollen das du dabei bist!</h3>
+      </div>
+
+      <!-- Formularbox -->
+      <div class="box box-bottom">
+        <label for="id_code" class="form-label">
+          Gib hier den Code auf der Einladung ein, oder scanne den QR Code um direkt angemeldet zu werden.
+        </label>
+
+        {% if msg %}
+          <p style="color:red">{{ msg }}</p>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+          {{ form.code }}
+          <button class="btn btn-success mt-3" type="submit">Einloggen</button>
+        </form>
+      </div>
+
     </div>
-  </form>
+  </div>
+</div>
+
 </body>
 </html>

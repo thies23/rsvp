@@ -53,7 +53,10 @@ Wir würden euch gerne zu unserer Hochzeit am {{ siteconfig.event_date }} in {{ 
 <div id="attend-details">
 
   <div class="mb-3">
-      
+    {% if invite.max_guests == 1 %}
+    <input type="hidden" name="guests_count" id="guest-count" class="form-range" value="1">
+    {% else %}
+     {% if invite.type == "family" %}Mit wie vielen Personen kommt ihr?{% else %}Mit wie vielen Personen kommst du?{% endif %}
     <label for="guest-count" class="form-label">
       {% if invite.type == "family" %}Mit wie vielen Personen kommt ihr?{% else %}Mit wie vielen Personen kommst du?{% endif %}
       <span id="guest-count-display">0</span> / {{ max_guests }}
@@ -61,7 +64,7 @@ Wir würden euch gerne zu unserer Hochzeit am {{ siteconfig.event_date }} in {{ 
     <input type="range" class="form-range" id="guest-count" name="guests_count"
            min="1" max="{{ max_guests }}"
            value="{% if rsvp.guests_count is not None %}{{ rsvp.guests_count }}{% elif invite.type == 'family' %}2{% else %}1{% endif %}">
-
+    {% endif %}
   </div>
   <div id="persons-container"></div>
 </div>

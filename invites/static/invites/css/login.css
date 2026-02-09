@@ -1,0 +1,132 @@
+body {
+  background-image: url("/static/invites/images/clear.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-color: #333;
+}
+
+.blurred-right {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.25)
+    ),
+    url("/static/invites/images/blur.jpg");
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+
+  min-height: 100vh;
+  padding: 40px 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.blurred-bg {
+  background-image: url("/static/invites/images/blur.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.blurred-bg.tinted {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    url("/static/invites/images/blur.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+.blurred-bg.shaded {
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    url("/static/invites/images/blur.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+.box {
+  position: static;
+  width: 100%;
+  height: auto;
+
+  background: none;
+  border: none;
+  box-shadow: none;
+
+  padding: 20px;
+  text-align: center;
+
+  display: block;
+}
+
+.box-top {
+  margin-top: 40px;
+}
+
+.box-bottom form {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  padding: 20px;
+}
+
+h1, h2, a, p {
+  color: white;
+  font-weight: 100;
+}
+
+.tinted h1,
+.tinted h2,
+.tinted a,
+.tinted p {
+  color: black;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+h2 {
+  font-size: 14px;
+}
+
+p {
+  margin: 20px;
+}
+
+.iklan {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: white;
+  width: 200px;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.iklan p {
+  margin: 0 0 15px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.iklan a {
+  background-color: #ff4757;
+  color: white;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+}
