@@ -1,3 +1,9 @@
+/*
+    ================================
+    Heavily "inspired" by https://codepen.io/ariona/pen/xxdOaM
+    Customized for our needs.
+    ================================
+*/
 body {
   background-image: url("/static/invites/images/clear.jpg");
   background-repeat: no-repeat;
@@ -5,6 +11,13 @@ body {
   background-position: center center;
   background-attachment: fixed;
   background-color: #333;
+}
+
+.beautiful-text {
+    font-family: 'lucien', sans-serif;
+    font-size: 48px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .blurred-right {

@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="de">
-<head><meta charset="utf-8"><title>Danke</title>
+<head><meta charset="utf-8"><title>Frej & Thies Heiraten - Antwort eingereicht</title>
 
   <link rel="stylesheet" href="/static/invites/css/bootstrap.css">
     <link rel="stylesheet" href="/static/invites/css/rsvp.css">
@@ -9,7 +9,7 @@
 <body>
 
 {% if invite.type == "family" %}
-    <h1>Danke für eure Antwort!</h1>
+    <h1 class="title">Danke für eure Antwort {{ invite.name }}!</h1>
     <p>Ihr könnt eure Antworten noch bis zum <span class="monospace">{{ siteconfig.rsvp_deadline }}</span> ändern. Benutzt dafür einfach beim Login erneut euren Code ( <span class="monospace">{{ invite.code }}</span> ) oder Scannt den QR-Code erneut.</p>
     {% if rsvp.guests_count > 1 %}
         <p>
@@ -29,10 +29,13 @@
   </p>
 {% endif %}
 {% else %}
-    <h1>Danke für deine Antwort!</h1>
+    <h1 class="title">Danke für deine Antwort {{ invite.name }}!</h1>
 
-  <p>Du kannst deine Antworten noch bis zum {{ siteconfig.rsvp_deadline }} ändern. Benutze dafür einfach beim Login erneut deinen Code ( {{ invite.code }} ) oder Scanne den QR-Code erneut.</p>
+  <p>Du kannst deine Antworten noch bis zum <span class="monospace">{{ siteconfig.rsvp_deadline }}</span> ändern. Benutze dafür einfach beim Login erneut deinen Code ( <span class="monospace">{{ invite.code }}</span> ) oder Scanne den QR-Code erneut.</p>
   <p>{% if rsvp.attending %}Du kommst {% if rsvp.guests_count > 2 %}mit {{ rsvp.guests_count }} Gästen.{% elif rsvp.guests_count > 1 %}mit einem Gast.{% else %}alleine.{% endif %}{% else %}Du hast abgelehnt.{% endif %}</p>
 {% endif %}
+<h1 class="title">Bis dahin!</h1>
+<h2 class="font-meddon">Frej & Thies</h2>
+
 </body>
 </html>
