@@ -2,3 +2,8 @@ invites/__pycache__/
 __pycache__/
 db.sqlite3
 invites/migrations/
+.venv/
+.vscode/
+.trunk/
+.DS_Store
+invites/static/invites/images/
