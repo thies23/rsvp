@@ -12,14 +12,15 @@ We needed a simple RSVP system for our wedding that is a little bit more than a 
 ## Requirements
 - django
 - qrcode
+- Pillow
 
 ## HowTo
 
 1. Clone git Repo
-2. `python3 manage makemigrations invites`
-3. `python3 manage migrate`
-4. `python3 manage createsuperuser`
-5. `python3 manage runserver`
+2. `python3 manage.py makemigrations invites`
+3. `python3 manage.py migrate`
+4. `python3 manage.py createsuperuser`
+5. `python3 manage.py runserver`
 6. Go to `http://127.0.0.1:8000` and log in
 7. Go to "Site Configs" and create a Site Config.
 8. Start creating invites
